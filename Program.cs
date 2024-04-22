@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using System;
 using System.Linq;
 using System.Reflection.Metadata;
 
@@ -7,12 +9,16 @@ namespace PhoneBook
 {
     public class Program
     {
+
+       
         public static void Main()
         {
             using var db = new PhoneBookContext();
 
+            
+
             // Note: This sample requires the database to be created before running.
-            Console.WriteLine($"Database path: {db.DbPath}.");
+            Console.WriteLine($"Database path: {db.connectionString}.");
 
             // Create
             Console.WriteLine("Inserting a new contact");

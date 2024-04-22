@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Configuration;
 using Microsoft.Identity.Client;
+using System.Data.Common;
 
 //Microsoft.Extensions.Configuration.FileExtensions;
 
@@ -16,12 +17,20 @@ namespace PhoneBook
     {
         public DbSet<Contact> Contacts { get; set; }
 
-        public string DbPath { get; }
+        public string connectionString { get; }
 
         public PhoneBookContext()
         {
 
-            DbPath = "";
+            //IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", false, true);
+            //IConfigurationRoot configuration = builder.Build();
+            IConfigurationRoot configuration =
+                new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+            connectionString = configuration.GetConnectionString("DbContext") ?? "";
+
 
         }
 
@@ -34,7 +43,7 @@ namespace PhoneBook
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
                     .Build();
-            var connectionString = configuration.GetConnectionString("DbContext");
+            //var connectionString = configuration.GetConnectionString("DbContext");
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
