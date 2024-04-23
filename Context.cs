@@ -31,7 +31,6 @@ namespace PhoneBook
                     .Build();
             connectionString = configuration.GetConnectionString("DbContext") ?? "";
 
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
